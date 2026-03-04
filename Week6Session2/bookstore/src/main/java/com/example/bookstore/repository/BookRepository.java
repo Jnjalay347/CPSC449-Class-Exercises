@@ -1,6 +1,7 @@
 package com.example.bookstore.repository;
 
 import com.example.bookstore.entity.Book;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -19,4 +20,10 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
     @Query("SELECT a.name, COUNT(b) FROM Book b JOIN b.author a GROUP BY a.name")
     List<Object[]> countBooksPerAuthor();
 
+    // join fetch
+    @Query("SELECT b FROM Book b JOIN FETCH b.author")
+    List<Book> findAllBooksWithAuthor();
+
+    @EntityGraph(attributePaths = {"author"})
+    List<Book> findAll();
 }

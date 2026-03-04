@@ -31,6 +31,16 @@ public class BookService {
         ).collect(Collectors.toList());
     }
 
+    public List<BookDTO> getAllBooksWithAuthor() {
+        return bookRepository.findAllBooksWithAuthor().stream().map(
+                book -> new BookDTO(
+                        book.getId(),
+                        book.getTitle(),
+                        book.getAuthor().getName()
+                )
+        ).collect(Collectors.toList());
+    }
+
     // get books by author
 
     // create a book
